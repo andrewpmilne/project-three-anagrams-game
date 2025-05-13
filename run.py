@@ -57,29 +57,43 @@ class WordSelector:
         random.shuffle(letters)
         return ''.join(letters)
 
-def play_game(name, difficulty):
+def play_game(name):
     """
-    Initiates 5 rounds of gameplay.
+    Initiates 5 rounds of gameplay and asks the player if they want to play again.
     """
-    score = 0
-    word_selector = WordSelector()
+    while True:
+        difficulty = select_difficulty(name)
+        score = 0
+        word_selector = WordSelector()
 
-    for round_num in range(1, 6):  # Loop 5 times
-        print(f"\nRound {round_num}")
-        word = word_selector.get_word_by_difficulty(difficulty)
-        if not word:
-            print("No valid word found for the selected difficulty.")
-            break
-        anagram = word_selector.jumble_word(word)
-        print(f"Unscramble this word: {anagram}")
-        guess = input("Your guess: ").strip().lower()
-        if guess == word:
-            print("Correct!")
-            score += 1
-        else:
-            print(f"Incorrect. The correct word was: {word}")
+        for round_num in range(1, 6):  # Loop 5 times
+            print(f"\nRound {round_num}")
+            word = word_selector.get_word_by_difficulty(difficulty)
+            if not word:
+                print("No valid word found for the selected difficulty.")
+                break
+            anagram = word_selector.jumble_word(word)
+            print(f"Unscramble this word: {anagram}")
+            guess = input("Your guess: ").strip().lower()
+            if guess == word:
+                print("Correct!")
+                score += 1
+            else:
+                print(f"Incorrect. The correct word was: {word}")
 
-    print(f"\nGame Over! Your final score is: {score}")
+        print(f"\nGame over, {name}! Your final score is: {score}")
+
+        # Ask if they want to play again
+        while True:
+            replay = input("\nWould you like to play again? (y/n): ").strip().lower()
+            if replay == 'y':
+                break  # Goes back to select_difficulty
+            elif replay == 'n':
+                print("Thanks for playing! Goodbye!")
+                exit()
+            else:
+                print("Invalid input. Please type 'y' for yes or 'n' for no.")
+
 
 answer = welcome_message()
 if answer == 'rules':
@@ -90,5 +104,4 @@ if answer == 'rules':
         "\nFor each one you answer correctly, you will receive a point.\n"
     )
 name = player_name()
-difficulty = select_difficulty(name)
-play_game(name, difficulty)
+play_game(name)
