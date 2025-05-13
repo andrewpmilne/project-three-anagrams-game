@@ -1,4 +1,6 @@
 import random
+import threading
+import time
 
 def welcome_message():
     """
@@ -56,6 +58,30 @@ class WordSelector:
         letters = list(word)
         random.shuffle(letters)
         return ''.join(letters)
+    
+def timed_input(prompt, timeout=20):
+    """
+    Prompts the user for input, giving them a set number of seconds to respond.
+    """
+    user_input = [None]
+    start_time = time.time()
+
+    def get_input():
+        user_input[0] = input(prompt)
+
+    thread = threading.Thread(target=get_input)
+    thread.daemon = True
+    thread.start()
+    thread.join(timeout)
+
+    end_time = time.time()
+    time_taken = end_time - start_time
+
+    if thread.is_alive():
+        return None, timeout
+    else:
+        return user_input[0], time_taken
+
 
 def play_game(name):
     """
@@ -66,23 +92,29 @@ def play_game(name):
         score = 0
         word_selector = WordSelector()
 
-        for round_num in range(1, 6):  # Loop 5 times
+        for round_num in range(1, 6):
             print(f"\nRound {round_num}")
             word = word_selector.get_word_by_difficulty(difficulty)
             if not word:
                 print("No valid word found for the selected difficulty.")
                 break
             anagram = word_selector.jumble_word(word)
-            print(f"Unscramble this word: {anagram}")
-            guess = input("Your guess: ").strip().lower()
-            if guess == word:
-                print("Correct!")
-                score += 1
-            elif sorted(guess) == sorted(word) and guess in word_selector.words:
-                print(f"Nice! '{guess}' is a real word using the same letters, our word was {word}. \n We'll still give you the point!")
-                score +=1
+            print(f"Unscramble this word (you have 20 seconds): {anagram}")
+            
+            guess, time_taken = timed_input("Your guess: ", timeout=20)
+            time_remaining = max(0, int(20 - time_taken))
+
+            if guess is None:
+                print(f"Sorry, time is up! The correct answer was: {word}")
+            elif guess.strip().lower() == word:
+                print(f"Correct! You answered in {int(time_taken)} seconds. You earn {time_remaining} points.")
+                score += time_remaining
+            elif sorted(guess.strip().lower()) == sorted(word) and guess.strip().lower() in word_selector.words:
+                print(f"Nice! '{guess}' is a valid anagram of the correct word '{word}'. You earn {time_remaining} points.")
+                score += time_remaining
             else:
                 print(f"Incorrect. The correct word was: {word}")
+
 
         print(f"\nGame over, {name}! Your final score is: {score}")
 
