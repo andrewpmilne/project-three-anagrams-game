@@ -2,6 +2,7 @@ import random
 import threading
 import time
 
+
 def welcome_message():
     """
     Introduces the player to the game and asks if they want to read the rules.
@@ -14,6 +15,7 @@ def welcome_message():
         else:
             print("Invalid input. Please type 'rules' or 'play'.\n")
 
+
 def player_name():
     """
     Gets the player to input their name.
@@ -21,6 +23,7 @@ def player_name():
     name_input = input("What is your name? ").strip()
     print(f"Hello {name_input}! Hope you enjoy the game.")
     return name_input
+
 
 def select_difficulty(name):
     """
@@ -33,6 +36,7 @@ def select_difficulty(name):
             return choice
         else:
             print("Invalid input. Please type 'e', 'm', or 'h'.\n")
+
 
 class WordSelector:
     """
@@ -58,7 +62,8 @@ class WordSelector:
         letters = list(word)
         random.shuffle(letters)
         return ''.join(letters)
-    
+
+
 def timed_input(prompt, timeout=20):
     """
     Prompts the user for input, giving them a set number of seconds to respond.
@@ -100,7 +105,6 @@ def play_game(name):
                 break
             anagram = word_selector.jumble_word(word)
             print(f"Unscramble this word (you have 20 seconds): {anagram}")
-            
             guess, time_taken = timed_input("Your guess: ", timeout=20)
             time_remaining = max(0, int(20 - time_taken))
 
@@ -114,7 +118,6 @@ def play_game(name):
                 score += time_remaining
             else:
                 print(f"Incorrect. The correct word was: {word}")
-
 
         print(f"\nGame over, {name}! Your final score is: {score}")
 
