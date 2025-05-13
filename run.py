@@ -40,7 +40,7 @@ def select_difficulty(name):
 
 class WordSelector:
     """
-    Selects a word from words.txt. Ensures correct length for the difficulty setting. Jumbled up the letters in the word.
+    Selects a word from words.txt. Ensures correct length for the difficulty setting. Jumbles up the letters in the word.
     """
     def __init__(self, filepath='words.txt'):
         with open(filepath, 'r') as file:
