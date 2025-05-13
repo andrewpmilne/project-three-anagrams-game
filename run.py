@@ -78,6 +78,9 @@ def play_game(name):
             if guess == word:
                 print("Correct!")
                 score += 1
+            elif sorted(guess) == sorted(word) and guess in word_selector.words:
+                print(f"Nice! '{guess}' is a real word using the same letters, our word was {word}. \n We'll still give you the point!")
+                score +=1
             else:
                 print(f"Incorrect. The correct word was: {word}")
 
