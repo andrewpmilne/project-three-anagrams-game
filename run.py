@@ -136,6 +136,7 @@ def play_game(name):
                 print(f"Incorrect. The correct word was: {word}")
 
         print(f"\nGame over, {name}! Your final score is: {score}")
+        print("Checking the leaderboard. Please wait....")
 
         leaderboard_check(name, difficulty, score)
 
@@ -146,7 +147,7 @@ def play_game(name):
                 break
             elif replay == 'l':
                 view_leaderboard(difficulty)
-                break
+                continue
             elif replay == 'e':
                 print("Thanks for playing! Goodbye!")
                 exit()
