@@ -139,16 +139,19 @@ def play_game(name):
 
         leaderboard_check(name, difficulty, score)
 
-        # Ask if they want to play again
+        # Ask if they want to play again or view the leaderboard.
         while True:
-            replay = input("\nWould you like to play again? (y/n): ").strip().lower()
-            if replay == 'y':
-                break  # Goes back to select_difficulty
-            elif replay == 'n':
+            replay = input("\nWould you like to play again (p), view the leaderboard (l) or exit (e)?").strip().lower()
+            if replay == 'p':
+                break
+            elif replay == 'l':
+                view_leaderboard(difficulty)
+                break
+            elif replay == 'e':
                 print("Thanks for playing! Goodbye!")
                 exit()
             else:
-                print("Invalid input. Please type 'y' for yes or 'n' for no.")
+                print("Invalid input. Please type 'p' to play again, 'l' to view the leaderboard or 'e' to exit.")
 
 def leaderboard_check(name, difficulty, score):
     sheet_map = {'e': easy, 'm': medium, 'h': hard}
@@ -181,6 +184,30 @@ def leaderboard_check(name, difficulty, score):
     # Print success message
     if any(player_name == name and player_score == score for player_name, player_score in leaderboard):
         print(f"\n🎉 Well done {name}, you are on the leaderboard!")
+    return
+
+def view_leaderboard(difficulty):
+    sheet_map = {'e': easy, 'm': medium, 'h': hard}
+    sheet = sheet_map[difficulty]
+
+    print("\n🏆 Leaderboard 🏆")
+    difficulty_name = {'e': 'Easy', 'm': 'Medium', 'h': 'Hard'}[difficulty]
+    print(f"Difficulty: {difficulty_name}\n")
+
+    data = sheet.get_all_values()  # Include header
+
+    if not data or len(data) == 1:
+        print("No scores yet for this difficulty.")
+        return
+
+    for i, row in enumerate(data):
+        if len(row) < 2:
+            continue  # Skip incomplete rows
+        name, score = row[0], row[1]
+        if i == 0:
+            print(f"{name:<20}{score}")  # Header formatting
+        else:
+            print(f"{i}. {name:<18}{score}")
     return
 
 
