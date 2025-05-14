@@ -1,6 +1,7 @@
 import random
 import threading
 import time
+import gspread
 
 
 def welcome_message():
