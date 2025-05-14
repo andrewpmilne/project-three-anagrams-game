@@ -36,9 +36,13 @@ def player_name():
     """
     Gets the player to input their name.
     """
-    name_input = input("What is your name? ").strip()
-    print(f"Hello {name_input}! Hope you enjoy the game.")
-    return name_input
+    while True:
+        name_input = input("What is your name? ").strip()
+        if 'collingwood' in name_input.lower():
+            print("Sorry Collingwood, you are banned. Your strike rate was too slow in Adelaide and it forced us into a risky declaration. Pick another name")
+        else:
+            print(f"Hello {name_input}! Hope you enjoy the game.")
+            return name_input
 
 
 def select_difficulty(name):
@@ -217,10 +221,13 @@ def view_leaderboard(difficulty):
 answer = welcome_message()
 if answer == 'rules':
     print(
-        "\nYou will be given five randomly generated words in the English language (with UK spelling)."
+        "\nYou will be given five randomly generated words in the English language (with American spelling)."
         "\nThe only problem is the letters have been jumbled up!"
         "\nYou will need to try and work out what the word is."
-        "\nFor each one you answer correctly, you will receive a point.\n"
+        "\nYou have twenty seconds to solve each anagram."
+        "\nThe quicker you solve the anagram the more points you will receive."
+        "\nFor example, if you solve it with 12 seconds remaining you will score 12 points."
+        "\nIf you score enough points your name will appear on the leaderboard.\n"
     )
 name = player_name()
 play_game(name)
