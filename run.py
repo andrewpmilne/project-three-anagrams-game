@@ -19,9 +19,6 @@ easy = SHEET.worksheet('easy')
 medium = SHEET.worksheet('medium')
 hard = SHEET.worksheet('hard')
 
-data = easy.get_all_values()
-print(data)
-
 def welcome_message():
     """
     Introduces the player to the game and asks if they want to read the rules.
@@ -140,6 +137,8 @@ def play_game(name):
 
         print(f"\nGame over, {name}! Your final score is: {score}")
 
+        leaderboard_check(name, difficulty, score)
+
         # Ask if they want to play again
         while True:
             replay = input("\nWould you like to play again? (y/n): ").strip().lower()
@@ -150,6 +149,41 @@ def play_game(name):
                 exit()
             else:
                 print("Invalid input. Please type 'y' for yes or 'n' for no.")
+
+def leaderboard_check(name, difficulty, score):
+    sheet_map = {'e': easy, 'm': medium, 'h': hard}
+    sheet = sheet_map[difficulty]
+
+    # Get existing scores (skip header)
+    data = sheet.get_all_values()[1:]
+
+    # Build current leaderboard
+    leaderboard = [(row[0], int(row[1])) for row in data if row[0] and row[1].isdigit()]
+
+    # Add new score
+    leaderboard.append((name, score))
+
+    # Sort and trim to top 10
+    leaderboard = sorted(leaderboard, key=lambda x: x[1], reverse=True)[:10]
+
+    # Write leaderboard rows from A2 downward
+    for i in range(10):
+        cell_row = i + 2
+        if i < len(leaderboard):
+            player_name, player_score = leaderboard[i]
+            sheet.update(range_name=f"A{cell_row}", values=[[player_name]])
+            sheet.update(range_name=f"B{cell_row}", values=[[str(player_score)]])
+        else:
+            # Clear any remaining old rows beyond current top scores
+            sheet.update(range_name=f"A{cell_row}", values=[[""]])
+            sheet.update(range_name=f"B{cell_row}", values=[[""]])
+
+    # Print success message
+    if any(player_name == name and player_score == score for player_name, player_score in leaderboard):
+        print(f"\n🎉 Well done {name}, you are on the leaderboard!")
+    return
+
+
 
 
 answer = welcome_message()
