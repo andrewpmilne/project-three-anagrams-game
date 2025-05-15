@@ -40,7 +40,9 @@ def player_name():
     """
     while True:
         name_input = input("What is your name? \n").strip()
-        if 'collingwood' in name_input.lower():
+        if name_input == "":
+            print("Please enter a name.")
+        elif 'collingwood' in name_input.lower():
             print("Sorry Collingwood, you are banned. Your strike rate was too slow in Adelaide and it forced us into a risky declaration. Pick another name")
         else:
             print(f"Hello {name_input}! Hope you enjoy the game.")
