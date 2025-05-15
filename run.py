@@ -1,6 +1,7 @@
 import random
 import threading
 import time
+from inputimeout import inputimeout, TimeoutOccurred
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -10,14 +11,14 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
-CREDS = Credentials.from_service_account_file('creds.json')
+CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('project_three_leaderboard')
+SHEET = GSPREAD_CLIENT.open("project_three_leaderboard")
 
-easy = SHEET.worksheet('easy')
-medium = SHEET.worksheet('medium')
-hard = SHEET.worksheet('hard')
+easy = SHEET.worksheet("easy")
+medium = SHEET.worksheet("medium")
+hard = SHEET.worksheet("hard")
 
 def welcome_message():
     """
@@ -52,7 +53,7 @@ def select_difficulty(name):
     print(f"What difficulty would you like, {name}?")
     while True:
         choice = input("Type 'e' for easy (6-letter words), 'm' for medium (7 or 8-letter words), or 'h' for hard (9 or 10-letter words): \n").lower().strip()
-        if choice in {'e', 'm', 'h'}:
+        if choice in {"e", "m", "h"}:
             return choice
         else:
             print("Invalid input. Please type 'e', 'm', or 'h'.\n")
@@ -62,16 +63,16 @@ class WordSelector:
     """
     Selects a word from words.txt. Ensures correct length for the difficulty setting. Jumbles up the letters in the word.
     """
-    def __init__(self, filepath='words.txt'):
-        with open(filepath, 'r') as file:
+    def __init__(self, filepath="words.txt"):
+        with open(filepath, "r") as file:
             self.words = [word.strip().lower() for word in file]
 
     def get_word_by_difficulty(self, difficulty):
-        if difficulty == 'e':
+        if difficulty == "e":
             valid_words = [w for w in self.words if len(w) == 6]
-        elif difficulty == 'm':
+        elif difficulty == "m":
             valid_words = [w for w in self.words if len(w) in (7, 8)]
-        elif difficulty == 'h':
+        elif difficulty == "h":
             valid_words = [w for w in self.words if len(w) in (9, 10)]
         else:
             valid_words = []
@@ -86,26 +87,17 @@ class WordSelector:
 
 def timed_input(prompt, timeout=20):
     """
-    Prompts the user for input, giving them a set number of seconds to respond.
+    Prompts the user for input with a time limit.
+    Returns the input (if any) and the time taken.
     """
-    user_input = [None]
     start_time = time.time()
-
-    def get_input():
-        user_input[0] = input(prompt)
-
-    thread = threading.Thread(target=get_input)
-    thread.daemon = True
-    thread.start()
-    thread.join(timeout)
-
-    end_time = time.time()
-    time_taken = end_time - start_time
-
-    if thread.is_alive():
+    try:
+        user_input = inputimeout(prompt=prompt, timeout=timeout)
+        time_taken = time.time() - start_time
+        return user_input.strip(), time_taken
+    except TimeoutOccurred:
+        print("\n⏰ Time's up!")
         return None, timeout
-    else:
-        return user_input[0], time_taken
 
 
 def play_game(name):
@@ -120,9 +112,6 @@ def play_game(name):
         for round_num in range(1, 6):
             print(f"\nRound {round_num}")
             word = word_selector.get_word_by_difficulty(difficulty)
-            if not word:
-                print("No valid word found for the selected difficulty.")
-                break
             anagram = word_selector.jumble_word(word)
             print(f"Unscramble this word (you have 20 seconds): {anagram}")
             guess, time_taken = timed_input("Your guess: ", timeout=20)
@@ -159,6 +148,10 @@ def play_game(name):
                 print("Invalid input. Please type 'p' to play again, 'l' to view the leaderboard or 'e' to exit.")
 
 def leaderboard_check(name, difficulty, score):
+    """
+    Checks to see if the score obtained makes the top ten leaderboard and informs the player if it has.
+    Updates the leaderboard.
+    """
     sheet_map = {'e': easy, 'm': medium, 'h': hard}
     sheet = sheet_map[difficulty]
 
@@ -189,21 +182,22 @@ def leaderboard_check(name, difficulty, score):
     # Print success message
     if any(player_name == name and player_score == score for player_name, player_score in leaderboard):
         print(f"\n🎉 Well done {name}, you are on the leaderboard!")
+    else:
+        print (f"\n Sorry {name}, that score didn't make the leaderboard.")
     return
 
 def view_leaderboard(difficulty):
-    sheet_map = {'e': easy, 'm': medium, 'h': hard}
+    """
+    Prints the leaderboard to the screen
+    """
+    sheet_map = {"e": easy, "m": medium, "h": hard}
     sheet = sheet_map[difficulty]
 
     print("\n🏆 Leaderboard 🏆")
-    difficulty_name = {'e': 'Easy', 'm': 'Medium', 'h': 'Hard'}[difficulty]
+    difficulty_name = {"e": "Easy", "m": "Medium", "h": "Hard"}[difficulty]
     print(f"Difficulty: {difficulty_name}\n")
 
     data = sheet.get_all_values()  # Include header
-
-    if not data or len(data) == 1:
-        print("No scores yet for this difficulty.")
-        return
 
     for i, row in enumerate(data):
         if len(row) < 2:
@@ -214,9 +208,6 @@ def view_leaderboard(difficulty):
         else:
             print(f"{i}. {name:<18}{score}")
     return
-
-
-
 
 answer = welcome_message()
 if answer == 'rules':
