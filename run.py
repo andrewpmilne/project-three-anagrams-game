@@ -1,5 +1,6 @@
 import random
 import math
+import string
 import time
 from inputimeout import inputimeout, TimeoutOccurred
 import gspread
@@ -42,8 +43,6 @@ def player_name():
         name_input = input("What is your name? \n").strip()
         if name_input == "":
             print("Please enter a name.")
-        elif 'collingwood' in name_input.lower():
-            print("Sorry Collingwood, you are banned. Your strike rate was too slow in Adelaide and it forced us into a risky declaration. Pick another name")
         else:
             print(f"Hello {name_input}! Hope you enjoy the game.")
             return name_input
@@ -68,7 +67,11 @@ class WordSelector:
     """
     def __init__(self, filepath="words.txt"):
         with open(filepath, "r") as file:
-            self.words = [word.strip().lower() for word in file]
+            raw_words = [word.strip().lower() for word in file]
+            self.words = [
+                word for word in raw_words
+                if all(char not in string.punctuation for char in word)
+            ]
 
     def get_word_by_difficulty(self, difficulty):
         if difficulty == "e":
