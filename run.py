@@ -37,7 +37,7 @@ def player_name():
     Gets the player to input their name.
     """
     while True:
-        name_input = input("What is your name? ").strip()
+        name_input = input("What is your name? \n).strip()
         if 'collingwood' in name_input.lower():
             print("Sorry Collingwood, you are banned. Your strike rate was too slow in Adelaide and it forced us into a risky declaration. Pick another name")
         else:
@@ -51,7 +51,7 @@ def select_difficulty(name):
     """
     print(f"What difficulty would you like, {name}?")
     while True:
-        choice = input("Type 'e' for easy (6-letter words), 'm' for medium (7 or 8-letter words), or 'h' for hard (9 or 10-letter words): ").lower().strip()
+        choice = input("Type 'e' for easy (6-letter words), 'm' for medium (7 or 8-letter words), or 'h' for hard (9 or 10-letter words): \n").lower().strip()
         if choice in {'e', 'm', 'h'}:
             return choice
         else:
@@ -146,7 +146,7 @@ def play_game(name):
 
         # Ask if they want to play again or view the leaderboard.
         while True:
-            replay = input("\nWould you like to play again (p), view the leaderboard (l) or exit (e)?").strip().lower()
+            replay = input("\nWould you like to play again (p), view the leaderboard (l) or exit (e)?\n").strip().lower()
             if replay == 'p':
                 break
             elif replay == 'l':
