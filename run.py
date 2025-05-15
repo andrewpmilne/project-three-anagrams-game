@@ -1,5 +1,5 @@
 import random
-import threading
+import math
 import time
 from inputimeout import inputimeout, TimeoutOccurred
 import gspread
@@ -19,6 +19,7 @@ SHEET = GSPREAD_CLIENT.open("project_three_leaderboard")
 easy = SHEET.worksheet("easy")
 medium = SHEET.worksheet("medium")
 hard = SHEET.worksheet("hard")
+
 
 def welcome_message():
     """
@@ -115,7 +116,7 @@ def play_game(name):
             anagram = word_selector.jumble_word(word)
             print(f"Unscramble this word (you have 20 seconds): {anagram}")
             guess, time_taken = timed_input("Your guess: ", timeout=20)
-            time_remaining = max(0, int(20 - time_taken))
+            time_remaining = max(0, math.ceil(20 - time_taken))
 
             if guess is None:
                 print(f"Sorry, time is up! The correct answer was: {word}")
@@ -146,6 +147,7 @@ def play_game(name):
                 exit()
             else:
                 print("Invalid input. Please type 'p' to play again, 'l' to view the leaderboard or 'e' to exit.")
+
 
 def leaderboard_check(name, difficulty, score):
     """
@@ -183,8 +185,9 @@ def leaderboard_check(name, difficulty, score):
     if any(player_name == name and player_score == score for player_name, player_score in leaderboard):
         print(f"\n🎉 Well done {name}, you are on the leaderboard!")
     else:
-        print (f"\n Sorry {name}, that score didn't make the leaderboard.")
+        print(f"\n Sorry {name}, that score didn't make the leaderboard.")
     return
+
 
 def view_leaderboard(difficulty):
     """
@@ -197,17 +200,18 @@ def view_leaderboard(difficulty):
     difficulty_name = {"e": "Easy", "m": "Medium", "h": "Hard"}[difficulty]
     print(f"Difficulty: {difficulty_name}\n")
 
-    data = sheet.get_all_values()  # Include header
+    data = sheet.get_all_values()
 
     for i, row in enumerate(data):
         if len(row) < 2:
-            continue  # Skip incomplete rows
+            continue
         name, score = row[0], row[1]
         if i == 0:
-            print(f"{name:<20}{score}")  # Header formatting
+            print(f"{name:<20}{score}")
         else:
             print(f"{i}. {name:<18}{score}")
     return
+
 
 answer = welcome_message()
 if answer == 'rules':
