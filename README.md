@@ -1,32 +1,51 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Anagrams Game!
 
-Welcome,
+The Anagrams Game is a Python terminal game, which runs in the Code Institute mock terminal in Heroku.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **May 14, 2024**
+Users can try to solve five anagrams set at easy, medium or hard level of difficulty. After completing the game, users will see if they have achieved a place on the leaderboard and have an option to view the leaderboard before playing again or exiting.
 
-## Reminders
+[Here is the live version of the project](https://project-three-anagrams-e926f3ae0dcd.herokuapp.com/)
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+## How to play
 
-## Creating the Heroku app
+This is the text the user will read if they select 'rules' as the first option in the game:
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+- You will be given five randomly generated words in the English language (with American spelling).
+- The only problem is the letters have been jumbled up!
+- You will need to try and work out what the word is.
+- You have twenty seconds to solve each anagram.
+- The quicker you solve the anagram the more points you will receive.
+- For example, if you solve it with 12 seconds remaining you will score 12 points.
+- If you score enough points your name will appear on the leaderboard.
 
-1. `heroku/python`
-2. `heroku/nodejs`
+## Features
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+### Rules
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+### Opportunity to enter your name
 
-Connect your GitHub repository and deploy as normal.
+### A difficulty selector
 
-## Constraints
+### Random word generation
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+### A Timer
 
----
+### A Solution Check
 
-Happy coding!
+### A Score
+
+### A Leaderboard
+
+## Data Model
+
+## Testing
+
+## Bugs
+
+### Solved Bugs
+
+### Remaining Bugs
+
+## Deployment
+
+## Credits
