@@ -26,7 +26,7 @@ def welcome_message():
     """
     Introduces the player to the game and asks if they want to read the rules.
     """
-    print("Welcome to the Anagrams game! \n")
+    print("\nWelcome to the Anagrams game! \n")
     while True:
         answer = input(
             "Type 'rules' to learn how to play or 'play' to start the game: \n"
@@ -39,12 +39,20 @@ def welcome_message():
 
 def player_name():
     """
-    Gets the player to input their name.
+    Gets the player to input their name (max 20 characters), always in caps.
     """
     while True:
-        name_input = input("What is your name? \n").strip()
-        if name_input == "":
-            print("Please enter a name.")
+        name_input = input(
+            "What is your username (max 20 characters)? \n"
+        ).strip().upper()
+
+        if len(name_input) == 0:
+            print("Please enter a username.")
+        elif len(name_input) > 20:
+            print(
+                """Username too long. Please enter a username with at most
+                20 characters."""
+            )
         else:
             print(f"Hello {name_input}! Hope you enjoy the game.")
             return name_input
@@ -70,8 +78,8 @@ def select_difficulty(name):
 
 class WordSelector:
     """
-    Selects a word from words.txt. 
-    Ensures correct length for the difficulty setting. 
+    Selects a word from words.txt.
+    Ensures correct length for the difficulty setting.
     Jumbles up the letters in the word.
     """
     def __init__(self, filepath="words.txt"):
@@ -117,7 +125,7 @@ def timed_input(prompt, timeout=20):
 
 def play_game(name):
     """
-    Initiates 5 rounds of gameplay. 
+    Initiates 5 rounds of gameplay.
     Asks the player if they want to play again.
     """
     while True:
@@ -134,18 +142,28 @@ def play_game(name):
             time_remaining = max(0, math.ceil(20 - time_taken))
 
             if guess is None:
-                print(f"Sorry, time is up! The correct answer was: {word}")
+                print(f"Sorry, time is up! The correct answer was: "
+                      f"{word}"
+                      )
             elif guess.strip().lower() == word:
-                print(f"Correct! You answered in {int(time_taken)} seconds. You earn {time_remaining} points.")
+                print(f"Correct! You answered in {int(time_taken)} seconds."
+                      "You earn {time_remaining} points."
+                      )
                 score += time_remaining
-            elif sorted(guess.strip().lower()) == sorted(word) and guess.strip().lower() in word_selector.words:
-                print(f"Nice! '{guess}' is a valid anagram of the correct word '{word}'. You earn {time_remaining} points.")
+            elif (sorted(guess.strip().lower()) == sorted(word)
+                  and guess.strip().lower() in word_selector.words):
+                print(f"Nice! '{guess}' is a valid anagram"
+                      "of the correct word '{word}'."
+                      "You earn {time_remaining} points."
+                      )
                 score += time_remaining
             else:
                 print(f"Incorrect. The correct word was: {word}")
 
-        print(f"\nGame over, {name}! Your final score is: {score}")
-        print("Checking the leaderboard. Please wait....")
+        print(
+            f"\nGame over, {name}! Your final score is: {score}\n"
+            "Checking the leaderboard. Please wait...."
+        )
 
         leaderboard_check(name, difficulty, score)
 
@@ -186,7 +204,11 @@ def leaderboard_check(name, difficulty, score):
     data = sheet.get_all_values()[1:]
 
     # Build current leaderboard
-    leaderboard = [(row[0], int(row[1])) for row in data if row[0] and row[1].isdigit()]
+    leaderboard = [
+        (row[0], int(row[1]))
+        for row in data if row[0]
+        and row[1].isdigit()
+        ]
 
     # Add new score
     leaderboard.append((name, score))
@@ -200,14 +222,20 @@ def leaderboard_check(name, difficulty, score):
         if i < len(leaderboard):
             player_name, player_score = leaderboard[i]
             sheet.update(range_name=f"A{cell_row}", values=[[player_name]])
-            sheet.update(range_name=f"B{cell_row}", values=[[str(player_score)]])
+            sheet.update(
+                range_name=f"B{cell_row}",
+                values=[[str(player_score)]]
+            )
         else:
             # Clear any remaining old rows beyond current top scores
             sheet.update(range_name=f"A{cell_row}", values=[[""]])
             sheet.update(range_name=f"B{cell_row}", values=[[""]])
 
     # Print success message
-    if any(player_name == name and player_score == score for player_name, player_score in leaderboard):
+    if any(
+        player_name == name and player_score == score
+        for player_name, player_score in leaderboard
+    ):
         print(f"\n🎉 Well done {name}, you are on the leaderboard!")
     else:
         print(f"\n Sorry {name}, that score didn't make the leaderboard.")
@@ -241,13 +269,17 @@ def view_leaderboard(difficulty):
 answer = welcome_message()
 if answer == 'rules':
     print(
-        "\nYou will be given five randomly generated words in the English language (with American spelling)."
-        "\nThe only problem is the letters have been jumbled up!"
-        "\nYou will need to try and work out what the word is."
-        "\nYou have twenty seconds to solve each anagram."
-        "\nThe quicker you solve the anagram the more points you will receive."
-        "\nFor example, if you solve it with 12 seconds remaining you will score 12 points."
-        "\nIf you score enough points your name will appear on the leaderboard.\n"
+        """
+• You will be given five randomly generated words in the English language
+  (with American spelling).
+• The only problem is the letters have been jumbled up!
+• You will need to try and work out what the word is.
+• You have twenty seconds to solve each anagram.
+• The quicker you solve the anagram the more points you will receive.
+• For example, if you solve it with 12 seconds remaining you will score 12
+  points.
+• If you score enough points your name will appear on the leaderboard.
+"""
     )
 name = player_name()
 play_game(name)
