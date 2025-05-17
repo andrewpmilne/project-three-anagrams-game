@@ -167,27 +167,38 @@ def play_game(name):
 
         leaderboard_check(name, difficulty, score)
 
-        # Ask if they want to play again or view the leaderboard.
+        viewed_leaderboard = False
+
         while True:
-            replay = input(
-                "Would you like to:\n"
-                "- Play again (p)\n"
-                "- View the leaderboard (l)\n"
-                "- Exit (e)?\n"
-            ).strip().lower()
+            if viewed_leaderboard:
+                replay = input(
+                    "\nWould you like to:\n"
+                    "- Play again (p)\n"
+                    "- Exit (e)?\n"
+                ).strip().lower()
+            else:
+                difficulty_name = {"e": "Easy", "m": "Medium", "h": "Hard"}[difficulty]
+                replay = input(
+                    "\nWould you like to:\n"
+                    "- Play again (p)\n"
+                    f"- View the {difficulty_name} Level Leaderboard (l)\n"
+                    "- Exit (e)?\n"
+                ).strip().lower()
 
             if replay == 'p':
                 break
-            elif replay == 'l':
+            elif replay == 'l' and not viewed_leaderboard:
                 view_leaderboard(difficulty)
-                continue
+                viewed_leaderboard = True
             elif replay == 'e':
                 print("Thanks for playing! Goodbye!")
                 exit()
             else:
                 print(
-                    "Invalid input. Please type 'p' to play again, "
-                    "'l' to view the leaderboard or 'e' to exit."
+                    "Invalid input. Please type 'p' to play again"
+                    + (", 'l' to view the leaderboard"
+                        if not viewed_leaderboard else "")
+                    + ", or 'e' to exit."
                 )
 
 
