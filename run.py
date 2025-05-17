@@ -136,7 +136,7 @@ def play_game(name):
         for round_num in range(1, 6):
             print(f"\nRound {round_num}")
             word = word_selector.get_word_by_difficulty(difficulty)
-            anagram = word_selector.jumble_word(word)
+            anagram = ' '.join(word_selector.jumble_word(word))
             print(f"Unscramble this word (you have 20 seconds): {anagram}")
             guess, time_taken = timed_input("Your guess: ", timeout=20)
             time_remaining = max(0, math.ceil(20 - time_taken))
