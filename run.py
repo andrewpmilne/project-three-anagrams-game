@@ -43,18 +43,18 @@ def player_name():
     """
     while True:
         name_input = input(
-            "What is your username (max 20 characters)? \n"
+            "\nWhat is your username (max 20 characters)? \n"
         ).strip().upper()
 
         if len(name_input) == 0:
-            print("Please enter a username.")
+            print("\nPlease enter a username.")
         elif len(name_input) > 20:
             print(
-                """Username too long. Please enter a username with at most
+                """\nUsername too long. Please enter a username with at most
                 20 characters."""
             )
         else:
-            print(f"Hello {name_input}! Hope you enjoy the game.")
+            print(f"\nHello {name_input}! Hope you enjoy the game.")
             return name_input
 
 
@@ -147,14 +147,14 @@ def play_game(name):
                       )
             elif guess.strip().lower() == word:
                 print(f"Correct! You answered in {int(time_taken)} seconds."
-                      "You earn {time_remaining} points."
+                      f"You earn {time_remaining} points."
                       )
                 score += time_remaining
             elif (sorted(guess.strip().lower()) == sorted(word)
                   and guess.strip().lower() in word_selector.words):
                 print(f"Nice! '{guess}' is a valid anagram"
-                      "of the correct word '{word}'."
-                      "You earn {time_remaining} points."
+                      f"of the correct word '{word}'."
+                      f"You earn {time_remaining} points."
                       )
                 score += time_remaining
             else:
