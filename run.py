@@ -28,7 +28,9 @@ def welcome_message():
     """
     print("Welcome to the Anagrams game! \n")
     while True:
-        answer = input("Type 'rules' to learn how to play or 'play' to start the game: \n").lower().strip()
+        answer = input(
+            "Type 'rules' to learn how to play or 'play' to start the game: \n"
+        ).lower().strip()
         if answer == "rules" or answer == "play":
             return answer
         else:
@@ -49,12 +51,17 @@ def player_name():
 
 
 def select_difficulty(name):
-    """
-    Gets the player to select a difficulty level
-    """
-    print(f"What difficulty would you like, {name}?")
+    """ Gets the player to select a difficulty level """
+
+    print(f"\nWhat difficulty would you like, {name}?")
     while True:
-        choice = input("Type 'e' for easy (6-letter words), 'm' for medium (7 or 8-letter words), or 'h' for hard (9 or 10-letter words): \n").lower().strip()
+        choice = input(
+            "\nType:\n"
+            "'e' for easy (6-letter words)\n"
+            "'m' for medium (7 or 8-letter words)\n"
+            "'h' for hard (9 or 10-letter words): \n"
+        ).lower().strip()
+
         if choice in {"e", "m", "h"}:
             return choice
         else:
@@ -63,7 +70,9 @@ def select_difficulty(name):
 
 class WordSelector:
     """
-    Selects a word from words.txt. Ensures correct length for the difficulty setting. Jumbles up the letters in the word.
+    Selects a word from words.txt. 
+    Ensures correct length for the difficulty setting. 
+    Jumbles up the letters in the word.
     """
     def __init__(self, filepath="words.txt"):
         with open(filepath, "r") as file:
@@ -108,7 +117,8 @@ def timed_input(prompt, timeout=20):
 
 def play_game(name):
     """
-    Initiates 5 rounds of gameplay and asks the player if they want to play again.
+    Initiates 5 rounds of gameplay. 
+    Asks the player if they want to play again.
     """
     while True:
         difficulty = select_difficulty(name)
@@ -141,7 +151,13 @@ def play_game(name):
 
         # Ask if they want to play again or view the leaderboard.
         while True:
-            replay = input("\nWould you like to play again (p), view the leaderboard (l) or exit (e)?\n").strip().lower()
+            replay = input(
+                "Would you like to:\n"
+                "- Play again (p)\n"
+                "- View the leaderboard (l)\n"
+                "- Exit (e)?\n"
+            ).strip().lower()
+
             if replay == 'p':
                 break
             elif replay == 'l':
@@ -151,12 +167,16 @@ def play_game(name):
                 print("Thanks for playing! Goodbye!")
                 exit()
             else:
-                print("Invalid input. Please type 'p' to play again, 'l' to view the leaderboard or 'e' to exit.")
+                print(
+                    "Invalid input. Please type 'p' to play again, "
+                    "'l' to view the leaderboard or 'e' to exit."
+                )
 
 
 def leaderboard_check(name, difficulty, score):
     """
-    Checks to see if the score obtained makes the top ten leaderboard and informs the player if it has.
+    Checks to see if the score obtained makes the top ten leaderboard.
+    Informs the player if it has.
     Updates the leaderboard.
     """
     sheet_map = {'e': easy, 'm': medium, 'h': hard}
