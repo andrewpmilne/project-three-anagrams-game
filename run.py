@@ -24,7 +24,8 @@ hard = SHEET.worksheet("hard")
 
 def welcome_message():
     """
-    Introduces the player to the game and asks if they want to read the rules.
+    Introduces the player to the game.
+    Asks if they want to read the rules.
     """
     print("\nWelcome to the Anagrams game! \n")
     while True:
@@ -39,7 +40,8 @@ def welcome_message():
 
 def player_name():
     """
-    Gets the player to input their name (max 20 characters), always in caps.
+    Gets the player to input their name (max 20 characters).
+    Converts to capital letters.
     """
     while True:
         name_input = input(
@@ -133,6 +135,7 @@ def play_game(name):
         score = 0
         word_selector = WordSelector()
 
+        # Creates a jumbled word and sets the time at 20.
         for round_num in range(1, 6):
             print(f"\nRound {round_num}")
             word = word_selector.get_word_by_difficulty(difficulty)
@@ -141,6 +144,7 @@ def play_game(name):
             guess, time_taken = timed_input("Your guess: ", timeout=20)
             time_remaining = max(0, math.ceil(20 - time_taken))
 
+            # Prints message for correct/ incorrect answer, updates points
             if guess is None:
                 print(f"Sorry, time is up! The correct answer was: "
                       f"{word}"
@@ -160,15 +164,13 @@ def play_game(name):
             else:
                 print(f"Incorrect. The correct word was: {word}")
 
-        print(
-            f"\nGame over, {name}! Your final score is: {score}\n"
-            "Checking the leaderboard. Please wait...."
-        )
+        print("Checking the leaderboard. Please wait...")
 
         leaderboard_check(name, difficulty, score)
 
         viewed_leaderboard = False
 
+        # Asks end game question
         while True:
             if viewed_leaderboard:
                 replay = input(
@@ -255,9 +257,7 @@ def leaderboard_check(name, difficulty, score):
 
 
 def view_leaderboard(difficulty):
-    """
-    Prints the leaderboard to the screen
-    """
+    """ Prints the leaderboard to the screen """
     sheet_map = {"e": easy, "m": medium, "h": hard}
     sheet = sheet_map[difficulty]
 
@@ -278,20 +278,24 @@ def view_leaderboard(difficulty):
     return
 
 
-answer = welcome_message()
-if answer == 'rules':
-    print(
-        """
-• You will be given five randomly generated words in the English language
-  (with American spelling).
-• The only problem is the letters have been jumbled up!
-• You will need to try and work out what the word is.
-• You have twenty seconds to solve each anagram.
-• The quicker you solve the anagram the more points you will receive.
-• For example, if you solve it with 12 seconds remaining you will score 12
-  points.
-• If you score enough points your name will appear on the leaderboard.
-"""
-    )
-name = player_name()
-play_game(name)
+def main():
+    answer = welcome_message()
+    if answer == 'rules':
+        print(
+            """
+    • You will be given five randomly generated words in the English language
+    (with American spelling).
+    • The only problem is the letters have been jumbled up!
+    • You will need to try and work out what the word is.
+    • You have twenty seconds to solve each anagram.
+    • The quicker you solve the anagram the more points you will receive.
+    • For example, if you solve it with 12 seconds remaining you will score 12
+    points.
+    • If you score enough points your name will appear on the leaderboard.
+    """
+        )
+    name = player_name()
+    play_game(name)
+
+
+main()
