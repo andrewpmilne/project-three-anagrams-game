@@ -39,7 +39,9 @@ def welcome_message():
         if answer == "rules" or answer == "play":
             return answer
         else:
-            print(Fore.RED + "Invalid input. Please type 'rules' or 'play'.\n" + Style.RESET_ALL)
+            print(Fore.RED +
+                  "Invalid input. Please type 'rules' or 'play'.\n"
+                  + Style.RESET_ALL)
 
 
 def player_name():
@@ -55,10 +57,11 @@ def player_name():
         if len(name_input) == 0:
             print(Fore.RED + "\nPlease enter a username." + Style.RESET_ALL)
         elif len(name_input) > 20:
-            print( Fore.RED +
+            print(
+                Fore.RED +
                 """\nUsername too long. Please enter a username with at most
                 20 characters."""
-            + Style.RESET_ALL)
+                + Style.RESET_ALL)
         else:
             print(f"\nHello {name_input}! Hope you enjoy the game.")
             return name_input
@@ -79,7 +82,11 @@ def select_difficulty(name):
         if choice in {"e", "m", "h"}:
             return choice
         else:
-            print(Fore.RED + "Invalid input. Please type 'e', 'm', or 'h'.\n" + Style.RESET_ALL)
+            print(
+                Fore.RED +
+                "Invalid input. Please type 'e', 'm', or 'h'.\n"
+                + Style.RESET_ALL
+                )
 
 
 class WordSelector:
@@ -203,12 +210,14 @@ def play_game(name):
                 print("Thanks for playing! Goodbye!")
                 exit()
             else:
-                print(Fore.RED +
+                print(
+                    Fore.RED +
                     "Invalid input. Please type 'p' to play again"
                     + (", 'l' to view the leaderboard"
                         if not viewed_leaderboard else "")
                     + ", or 'e' to exit."
-                + Style.RESET_ALL)
+                    + Style.RESET_ALL
+                    )
 
 
 def leaderboard_check(name, difficulty, score):
