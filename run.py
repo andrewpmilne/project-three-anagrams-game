@@ -4,7 +4,11 @@ import string
 import time
 from inputimeout import inputimeout, TimeoutOccurred
 import gspread
+from colorama import init, Fore, Style
 from google.oauth2.service_account import Credentials
+
+# Initialise colorama
+init()
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -35,7 +39,7 @@ def welcome_message():
         if answer == "rules" or answer == "play":
             return answer
         else:
-            print("Invalid input. Please type 'rules' or 'play'.\n")
+            print(Fore.RED + "Invalid input. Please type 'rules' or 'play'.\n" + Style.RESET_ALL)
 
 
 def player_name():
