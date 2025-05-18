@@ -61,7 +61,7 @@ def player_name():
 def select_difficulty(name):
     """ Gets the player to select a difficulty level """
 
-    print(f"\nWhat difficulty would you like, {name}?")
+    print("\nWhat difficulty would you like?")
     while True:
         choice = input(
             "\nType:\n"
@@ -177,7 +177,8 @@ def play_game(name):
                     "- Exit (e)?\n"
                 ).strip().lower()
             else:
-                difficulty_name = {"e": "Easy", "m": "Medium", "h": "Hard"}[difficulty]
+                difficulty_name = ({"e": "Easy", "m": "Medium",
+                                    "h": "Hard"}[difficulty])
                 replay = input(
                     "\nWould you like to:\n"
                     "- Play again (p)\n"
