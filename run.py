@@ -164,7 +164,9 @@ def play_game(name):
             else:
                 print(f"Incorrect. The correct word was: {word}")
 
-        print("Checking the leaderboard. Please wait...")
+        print(
+            f"\nYou scored {score} points!"
+            "\nChecking the leaderboard. Please wait...")
 
         leaderboard_check(name, difficulty, score)
 
