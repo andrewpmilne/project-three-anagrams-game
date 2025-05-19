@@ -4,6 +4,7 @@ from word_selector import WordSelector
 from leaderboard import leaderboard_check, view_leaderboard
 from inputimeout import inputimeout, TimeoutOccurred
 from colorama import init, Fore, Style
+import msvcrt
 
 # Initialise colorama
 init()
@@ -125,6 +126,15 @@ def play_game(name):
                 score += time_remaining
             else:
                 print(f"Incorrect. The correct word was: {word}")
+            
+            # checks user is ready to continue
+            if round_num < 5:
+                print("\nPress the SPACE BAR to continue...")
+                while True:
+                    if msvcrt.kbhit():
+                        key = msvcrt.getch()
+                        if key == b' ':
+                            break
 
         print(
             f"\nYou scored {score} points!"
