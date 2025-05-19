@@ -1,29 +1,12 @@
-import random
 import math
-import string
 import time
+from word_selector import WordSelector
+from leaderboard import leaderboard_check, view_leaderboard
 from inputimeout import inputimeout, TimeoutOccurred
-import gspread
 from colorama import init, Fore, Style
-from google.oauth2.service_account import Credentials
 
 # Initialise colorama
 init()
-
-SCOPE = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
-    ]
-
-CREDS = Credentials.from_service_account_file("creds.json")
-SCOPED_CREDS = CREDS.with_scopes(SCOPE)
-GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open("project_three_leaderboard")
-
-easy = SHEET.worksheet("easy")
-medium = SHEET.worksheet("medium")
-hard = SHEET.worksheet("hard")
 
 
 def welcome_message():
@@ -87,38 +70,6 @@ def select_difficulty(name):
                 "Invalid input. Please type 'e', 'm', or 'h'.\n"
                 + Style.RESET_ALL
                 )
-
-
-class WordSelector:
-    """
-    Selects a word from words.txt.
-    Ensures correct length for the difficulty setting.
-    Jumbles up the letters in the word.
-    """
-    def __init__(self, filepath="words.txt"):
-        with open(filepath, "r") as file:
-            raw_words = [word.strip().lower() for word in file]
-            self.words = [
-                word for word in raw_words
-                if all(char not in string.punctuation for char in word)
-            ]
-
-    def get_word_by_difficulty(self, difficulty):
-        if difficulty == "e":
-            valid_words = [w for w in self.words if len(w) == 6]
-        elif difficulty == "m":
-            valid_words = [w for w in self.words if len(w) in (7, 8)]
-        elif difficulty == "h":
-            valid_words = [w for w in self.words if len(w) in (9, 10)]
-        else:
-            valid_words = []
-
-        return random.choice(valid_words) if valid_words else None
-
-    def jumble_word(self, word):
-        letters = list(word)
-        random.shuffle(letters)
-        return ''.join(letters)
 
 
 def timed_input(prompt, timeout=20):
@@ -218,79 +169,6 @@ def play_game(name):
                     + ", or 'e' to exit."
                     + Style.RESET_ALL
                     )
-
-
-def leaderboard_check(name, difficulty, score):
-    """
-    Checks to see if the score obtained makes the top ten leaderboard.
-    Informs the player if it has.
-    Updates the leaderboard.
-    """
-    sheet_map = {'e': easy, 'm': medium, 'h': hard}
-    sheet = sheet_map[difficulty]
-
-    # Get existing scores (skip header)
-    data = sheet.get_all_values()[1:]
-
-    # Build current leaderboard
-    leaderboard = [
-        (row[0], int(row[1]))
-        for row in data if row[0]
-        and row[1].isdigit()
-        ]
-
-    # Add new score
-    leaderboard.append((name, score))
-
-    # Sort and trim to top 10
-    leaderboard = sorted(leaderboard, key=lambda x: x[1], reverse=True)[:10]
-
-    # Write leaderboard rows from A2 downward
-    for i in range(10):
-        cell_row = i + 2
-        if i < len(leaderboard):
-            player_name, player_score = leaderboard[i]
-            sheet.update(range_name=f"A{cell_row}", values=[[player_name]])
-            sheet.update(
-                range_name=f"B{cell_row}",
-                values=[[str(player_score)]]
-            )
-        else:
-            # Clear any remaining old rows beyond current top scores
-            sheet.update(range_name=f"A{cell_row}", values=[[""]])
-            sheet.update(range_name=f"B{cell_row}", values=[[""]])
-
-    # Print success message
-    if any(
-        player_name == name and player_score == score
-        for player_name, player_score in leaderboard
-    ):
-        print(f"\n🎉 Well done {name}, you are on the leaderboard!")
-    else:
-        print(f"\n Sorry {name}, that score didn't make the leaderboard.")
-    return
-
-
-def view_leaderboard(difficulty):
-    """ Prints the leaderboard to the screen """
-    sheet_map = {"e": easy, "m": medium, "h": hard}
-    sheet = sheet_map[difficulty]
-
-    print("\n🏆 Leaderboard 🏆")
-    difficulty_name = {"e": "Easy", "m": "Medium", "h": "Hard"}[difficulty]
-    print(f"Difficulty: {difficulty_name}\n")
-
-    data = sheet.get_all_values()
-
-    for i, row in enumerate(data):
-        if len(row) < 2:
-            continue
-        name, score = row[0], row[1]
-        if i == 0:
-            print(f"{name:<20}{score}")
-        else:
-            print(f"{i}. {name:<18}{score}")
-    return
 
 
 def main():
