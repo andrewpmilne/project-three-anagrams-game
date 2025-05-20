@@ -1,6 +1,7 @@
 import string
 import random
 
+
 class WordSelector:
     """
     Selects a word from words.txt.

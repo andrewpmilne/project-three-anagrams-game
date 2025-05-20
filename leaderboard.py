@@ -60,7 +60,10 @@ def leaderboard_check(name, difficulty, score):
     # Print success message with position
     for index, (player_name, player_score) in enumerate(leaderboard, start=1):
         if player_name == name and player_score == score:
-            print(f"\n🎉 Well done {name}, you are on the leaderboard! Position: #{index}")
+            print(f"""
+                🎉 Well done {name}, you are on the leaderboard!
+                Position: #{index}
+                """)
             break
     else:
         print(f"\n Sorry {name}, that score didn't make the leaderboard.")
