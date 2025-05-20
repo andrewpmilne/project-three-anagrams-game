@@ -67,6 +67,13 @@ The user is then given the opportunity to view a leaderboard, play again or exit
 
 ![leaderboard](readme-resources/leaderboard.png)
 
+### Error Messages
+
+## Flowchart
+This flowchart represents the logical flow of the program.
+
+![Flowchart to showthe logical flow of the program](readme-resources/flowchart.png)
+
 ## Data Model
 To improve readability and maintainability, I split my code into three separate .py files. I created a class (WordSelector) to handle reading and storing the word data from words.txt, which avoids the need to re-read the file every time a word is needed. This class also contains methods for selecting a word based on the chosen difficulty and jumbling the letters to create an anagram.
 
@@ -89,4 +96,10 @@ There is still a bug relating to the words.txt file used. Currently, there are s
 
 ## Deployment
 
+## Technologies Used
+
 ## Credits
+
+## Acknowledgements
+Thanks, once again, to Juliia Konovalova for Slack calls and advice whilst nine months pregnant!
+My friend, John Holland, for playtesting the game and occasionally getting on the leaderboard!
