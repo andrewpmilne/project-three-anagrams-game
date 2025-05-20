@@ -68,6 +68,11 @@ The user is then given the opportunity to view a leaderboard, play again or exit
 ![leaderboard](readme-resources/leaderboard.png)
 
 ### Error Messages
+Red coloured Validation Error messages are a feature that can be seen at various points in the game. They avoid errors that would have consequences at a later point in the program (such as a username with more than 20 characters) and give a clear message to the user about what they need to type for the game to continue. Colorama was implemented so that they could be written in red and stand out to the user.
+
+![example of validation error](readme-resources/validation-one.png)
+
+![another example of validation error](readme-resources/validation-two.png)
 
 ## Flowchart
 This flowchart represents the logical flow of the program.
@@ -80,8 +85,22 @@ To improve readability and maintainability, I split my code into three separate 
 Using a class in this way helps separate word-handling logic from the main gameplay and leaderboard functionality, which are handled in their own modules. This structure not only keeps the code organised but also makes it easier to extend or modify the game in the future without major rewrites.
 
 ## Testing
+A number of people have played the game to test for errors, including the designer and a Code Institute mentor. Attemps to 'break' the code were made to ensure all error messages appeared as expected. The program has been tested in the local terminal and the Code Institue Heroku terminal.
 
 ### Validation
+All three .py modules have been passed through the Code Institute linter and confirmed no problems.
+
+run.py
+
+![screenshot of run.py linter](readme-resources/run-linter.png)
+
+word_selector.py
+
+![screenshot of word_selector.py linter](readme-resources/word-selector-linter.png)
+
+leaderboard.py
+
+![screenshot of leaderboard.py linter](readme-resources/leaderboard-linter.png)
 
 ## Bugs
 A number of bugs were found during the testing process at various occurences.
@@ -94,11 +113,18 @@ Playtesting revealed that if a user attempted to type an answer just as the time
 ### Remaining Bugs
 There is still a bug relating to the words.txt file used. Currently, there are still occurences where a user will type in a correct answers that uses the right letters and is a word in the English language but is not in the words.txt file. On this occasion the program will check the txt file for other suitable answers but will not be able to find one. To completely aleviate this issue a much larger dictionary would need to be used to check answers. This dictionary could not be used for the generation of the words at it would regularly find obscure and unusual English words, which would be frustrating for the user.
 
+## Future Features
+- Implement a larger dictionary to fix the bug described above of anagrams of the correct word being considered incorrect.
+- Implement a two player game.
+- Create a visual countdown so players can see how many seconds are remaining as they solve an anagram.
+
 ## Deployment
 
 ## Technologies Used
 
 ## Credits
+List of 3000 common English words found through [université paris cité](https://python.sdv.u-paris.fr/data-files/english-common-words.txt)
+
 
 ## Acknowledgements
 Thanks, once again, to Juliia Konovalova for Slack calls and advice whilst nine months pregnant!
