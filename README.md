@@ -120,6 +120,59 @@ There is still a bug relating to the words.txt file used. Currently, there are s
 
 ## Deployment
 
+For your own deployment of this project, you will need to create a leaderboard spreadsheet in your Google Drive. Be sure to share this spreadsheet with your Google Service Account's email address.
+When deploying to Heroku (or running locally), you must provide your own creds.json file containing your Google Service Account credentials. This file is not included in the repository for security reasons.
+
+### Clone from Github
+1. Go to the repository on GitHub: [project-three-anagrams-game](https://github.com/andrewpmilne/project-three-anagrams-game)
+2. Click the green **Code** button.
+3. Copy the repository URL
+4. Open your terminal or command prompt.
+5. Navigate to the directory where you want to store the project.
+6. Run the following command to clone the repository:
+
+   bash
+   git clone https://github.com/andrewpmilne/project-three-anagrams-game.git
+
+### Create a Virtual Environment (using VS code)
+1. Open the Command Palette (Ctrl + Shift + P on Windows or Cmd + Shift + P on macOS).
+2. In the Command Palette type: Python: Create Environment.
+3. Select Python: Create Environment from the list.
+4. Select Venv from the drop down menu.
+5. Check that your environment is active by editing an .py file and looking for ('venv': venv) near the bottom right hand corner of the screen.
+
+### Install Dependencies
+1. Ensure that there is a requirements.txt file in the root of the project folder.
+2. In the terminal, run: pip install -r requirements.txt
+3. Verify the installation with: pip list
+
+### Deploy in Heroku
+
+Reminder: You will need to create your own creds.json file to deploy to Heroku.
+My creds.json file is not included in this project for security reasons.
+
+1. Navigate to the [Heroku website](https://www.heroku.com) and log in to your account. Create an account if you don't have one.
+2. Click on 'new' to create a new project.
+3. Choose 'create new app' from the dropdown menu.
+4. Name the app and choose a region.
+5. Navigate to settings on the tab.
+6. Click Reveal Config Vars.
+7. Add a config var with a key of CREDS (capitals).
+8. Go to the creds.json file you created and paste the details into the value field of the config var.
+9. Click add.
+10. Create another config var with a key of PORT and a value of 8000.
+11. Scroll down to Buildpacks and click add buildpack.
+12. Add the buildpack called Python.
+13. Add the buildpack called nodejs.
+14. In this list of buildpacks, ensure Python is above nodejs.
+15. Scroll back to the top and click on the deploy section.
+16. In the deployment section click GitHub.
+17. In the Connect to GitHub section type in the name you have called your project.
+18. Click connect.
+19. Scroll down and choose either 'Enable Automatic Deploys' or 'Deploy Branch'.
+20. Wait whilst the project deploys, then click on 'view' to check it is working.
+
+
 ## Technologies Used
 - Python libraries:
    - [Colorama](https://pypi.org/project/colorama/) used to add red validation messages.
@@ -133,16 +186,8 @@ There is still a bug relating to the words.txt file used. Currently, there are s
 - [Heroku](https://www.heroku.com) was used as the cloud platform to deploy and host the application.
 - [ChatGPT](https://chat.openai.com) was used for debugging assistance during development.
 
-
-
-
-
-
-
-
 ## Credits
 List of 3000 common English words found through [université paris cité](https://python.sdv.u-paris.fr/data-files/english-common-words.txt)
-
 
 ## Acknowledgements
 Thanks, once again, to Juliia Konovalova for Slack calls and advice whilst nine months pregnant!
