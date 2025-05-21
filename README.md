@@ -68,7 +68,7 @@ The user is then given the opportunity to view a leaderboard, play again or exit
 ![leaderboard](readme-resources/leaderboard.png)
 
 ### Error Messages
-Red coloured Validation Error messages are a feature that can be seen at various points in the game. They avoid errors that would have consequences at a later point in the program (such as a username with more than 20 characters) and give a clear message to the user about what they need to type for the game to continue. Colorama was implemented so that they could be written in red and stand out to the user.
+Red Error messages are a feature that can be seen at various points in the game. They avoid errors that would have consequences at a later point in the program (such as a username with more than 20 characters) and give a clear message to the user about what they need to type for the game to continue. Colorama was implemented so that they could be written in red and stand out to the user.
 
 ![example of validation error](readme-resources/validation-one.png)
 
@@ -121,6 +121,24 @@ There is still a bug relating to the words.txt file used. Currently, there are s
 ## Deployment
 
 ## Technologies Used
+- Python libraries:
+   - [Colorama](https://pypi.org/project/colorama/) used to add red validation messages.
+   - [inputimeout](https://pypi.org/project/inputimeout/) used to create a time limit for solving anagrams.
+   - [gspread](https://pypi.org/project/gspread/) used to link a Google sheet with the leaderboard data.
+- The project also uses Python’s standard library modules such as string, math, random, and time.
+- [Lucidchart](https://www.lucidchart.com) was used to create the flowchart.
+- [Visual Studio Code](https://code.visualstudio.com) was used as the integrated development environment (IDE) for writing, editing, and debugging the code.
+- [Git](https://git-scm.com) was used as the version control system to manage and track changes in the code. 
+- [GitHub](https://github.com) served as the remote platform to host the repository.
+- [Heroku](https://www.heroku.com) was used as the cloud platform to deploy and host the application.
+- [ChatGPT](https://chat.openai.com) was used for debugging assistance during development.
+
+
+
+
+
+
+
 
 ## Credits
 List of 3000 common English words found through [université paris cité](https://python.sdv.u-paris.fr/data-files/english-common-words.txt)
