@@ -1,7 +1,7 @@
 import gspread
+from colorama import Fore, Style, init
 from google.oauth2.service_account import Credentials
 
-from colorama import Fore, Style, init
 init()
 
 

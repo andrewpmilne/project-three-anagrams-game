@@ -1,9 +1,10 @@
 import math
 import time
-from word_selector import WordSelector
-from leaderboard import leaderboard_check, view_leaderboard
 from inputimeout import inputimeout, TimeoutOccurred
 from colorama import init, Fore, Style
+from word_selector import WordSelector
+from leaderboard import leaderboard_check, view_leaderboard
+
 
 # Initialise colorama
 init()
