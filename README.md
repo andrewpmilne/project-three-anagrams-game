@@ -67,8 +67,8 @@ The user is then given the opportunity to view a leaderboard, play again or exit
 
 ![leaderboard](readme-resources/leaderboard.png)
 
-### Error Messages
-Red Error messages are a feature that can be seen at various points in the game. They avoid errors that would have consequences at a later point in the program (such as a username with more than 20 characters) and give a clear message to the user about what they need to type for the game to continue. Colorama was implemented so that they could be written in red and stand out to the user.
+### Error Messages and colour
+Red Error messages are a feature that can be seen at various points in the game. They avoid errors that would have consequences at a later point in the program (such as a username with more than 20 characters) and give a clear message to the user about what they need to type for the game to continue. Colorama was implemented so that they could be written in red and stand out to the user. Colorama was also used to create clarity for the user regarding correct and incorrect responses. Green indicates a correct response, whilst yellow indicates the true answer if an incorrect response has been made.
 
 ![example of validation error](readme-resources/validation-one.png)
 
@@ -112,6 +112,8 @@ Playtesting revealed that if a user attempted to type an answer just as the time
 
 ### Remaining Bugs
 There is still a bug relating to the words.txt file used. Currently, there are still occurrences where a user will type in a correct answer that uses the right letters and is a word in the English language but is not in the words.txt file. On this occasion the program will check the txt file for other suitable answers but will not be able to find one. To completely alleviate this issue a much larger dictionary would need to be used to check answers. This dictionary could not be used for the generation of the words at it would regularly find obscure and unusual English words, which would be frustrating for the user.
+
+There is currently a bug relating to the leaderboard check. Whilst the check is occuring, it is still possible for a user to type, which then can lead to an invalid input message once the leaderboard check has completed. This only has minor impact on the user as they are still able to type a valid input after the leaderboard check has completed. 
 
 ## Future Features
 - Implement a larger dictionary to fix the bug described above of anagrams of the correct word being considered incorrect.

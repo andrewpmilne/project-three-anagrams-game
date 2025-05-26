@@ -165,9 +165,9 @@ def play_game(name):
             f"\nYou scored {score} points!"
             "\nChecking the leaderboard. Please wait...")
 
-        leaderboard_check(name, difficulty, score)
-
         viewed_leaderboard = False
+
+        leaderboard_check(name, difficulty, score)
 
         # Asks end game question
         while True:
