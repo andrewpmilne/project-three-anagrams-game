@@ -8,6 +8,18 @@ from colorama import init, Fore, Style
 # Initialise colorama
 init()
 
+# The Rules
+RULES = """
+• You will be given five randomly generated words in the English language
+  (with American spelling).
+• The only problem is the letters have been jumbled up!
+• You will need to try and work out what the word is.
+• You have twenty seconds to solve each anagram.
+• The quicker you solve the anagram the more points you will receive.
+• Eg, if you solve it with 12 seconds remaining you will score 12 points.
+• If you score enough points your name will appear on the leaderboard.
+"""
+
 
 def welcome_message():
     """
@@ -196,19 +208,7 @@ def play_game(name):
 def main():
     answer = welcome_message()
     if answer == 'rules':
-        print(
-            """
-    • You will be given five randomly generated words in the English language
-    (with American spelling).
-    • The only problem is the letters have been jumbled up!
-    • You will need to try and work out what the word is.
-    • You have twenty seconds to solve each anagram.
-    • The quicker you solve the anagram the more points you will receive.
-    • For example, if you solve it with 12 seconds remaining you will score 12
-    points.
-    • If you score enough points your name will appear on the leaderboard.
-    """
-        )
+        print(RULES)
     name = player_name()
     play_game(name)
 
