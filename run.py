@@ -102,29 +102,38 @@ def play_game(name):
             print(f"\nRound {round_num}")
             word = word_selector.get_word_by_difficulty(difficulty)
             anagram = ' '.join(word_selector.jumble_word(word))
-            print(f"Unscramble this word (you have 20 seconds): {anagram}")
+            print(
+                f"Unscramble this word (you have 20 seconds): {anagram}\n"
+                "To skip hit enter"
+            )
             guess, time_taken = timed_input("Your guess: ", timeout=20)
             time_remaining = max(0, math.ceil(20 - time_taken))
 
             # Prints message for correct/ incorrect answer, updates points
             if guess is None:
-                print(f"Sorry, time is up! The correct answer was: "
-                      f"{word}"
-                      )
+                print(
+                    f"Sorry, time is up! The correct answer was: "
+                    f"{Fore.YELLOW}{word}{Style.RESET_ALL}"
+                    )
             elif guess.strip().lower() == word:
-                print(f"Correct! You answered in {int(time_taken)} seconds."
+                print(f"{Fore.GREEN}Correct!{Style.RESET_ALL}"
+                      f"You answered in {int(time_taken)} seconds."
                       f"You earn {time_remaining} points."
                       )
                 score += time_remaining
             elif (sorted(guess.strip().lower()) == sorted(word)
                   and guess.strip().lower() in word_selector.words):
                 print(f"Nice! '{guess}' is a valid anagram"
-                      f"of the correct word '{word}'."
+                      "of the correct word:"
+                      f"'{Fore.YELLOW}{word}{Style.RESET_ALL}'."
                       f"You earn {time_remaining} points."
                       )
                 score += time_remaining
             else:
-                print(f"Incorrect. The correct word was: {word}")
+                print(
+                    "Incorrect. The correct word was: "
+                    f"{Fore.YELLOW}{word}{Style.RESET_ALL}"
+                    )
 
             # checks user is ready to continue
             if round_num < 5:
