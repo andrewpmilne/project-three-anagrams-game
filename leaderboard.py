@@ -1,6 +1,10 @@
 import gspread
 from google.oauth2.service_account import Credentials
 
+from colorama import Fore, Style, init
+init()
+
+
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -60,13 +64,18 @@ def leaderboard_check(name, difficulty, score):
     # Print success message with position
     for index, (player_name, player_score) in enumerate(leaderboard, start=1):
         if player_name == name and player_score == score:
-            print(f"""
-                🎉 Well done {name}, you are on the leaderboard!
-                Position: #{index}
-                """)
+            print(
+                f"{Fore.GREEN}🎉 Well done {name}!"
+                "You are on the leaderboard!\n"
+                f"Position: #{index}{Style.RESET_ALL}"
+            )
             break
     else:
-        print(f"\n Sorry {name}, that score didn't make the leaderboard.")
+        print(
+            f"{Fore.YELLOW}\nSorry {name}.\n"
+            f"That score didn't make the leaderboard.{Style.RESET_ALL}"
+        )
+
     return
 
 

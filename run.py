@@ -129,8 +129,8 @@ def play_game(name):
                     )
             elif guess.strip().lower() == word:
                 print(f"{Fore.GREEN}Correct!{Style.RESET_ALL}"
-                      f"You answered in {int(time_taken)} seconds."
-                      f"You earn {time_remaining} points."
+                      f"\nYou answered in {int(time_taken)} seconds."
+                      f"\nYou earn {time_remaining} points."
                       )
                 score += time_remaining
             elif (sorted(guess.strip().lower()) == sorted(word)
@@ -213,4 +213,5 @@ def main():
     play_game(name)
 
 
-main()
+if __name__ == "__main__":
+    main()
